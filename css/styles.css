@@ -277,3 +277,27 @@ input:focus, textarea:focus { outline: none; border-color: var(--c); }
 .cat-foot a:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 8%, transparent); }
 .cat-foot small { display: block; font: 500 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .cat-foot span { font: 400 28px var(--serif); color: var(--c); }
+
+/* ---------- offline status pill ---------- */
+.net-pill {
+  position: fixed; z-index: 50; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 8px;
+  max-width: min(300px, calc(100vw - 28px)); padding: 8px 13px 8px 11px; text-align: left;
+  background: color-mix(in srgb, var(--bg2) 82%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--line); border-radius: 999px; color: var(--ink);
+  font: 500 11px/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+  box-shadow: 0 6px 24px rgba(0,0,0,.35); transition: border-color .3s, border-radius .3s;
+}
+.net-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.net-pill .sub { grid-column: 2; display: none; margin-top: 6px; font: 400 12px/1.4 var(--sans); letter-spacing: 0; text-transform: none; color: var(--muted); }
+.net-pill.open { border-radius: 16px; }
+.net-pill.open .sub { display: block; }
+.net-pill[data-mode="ready"] { border-color: color-mix(in srgb, #5FD3A5 55%, var(--line)); }
+.net-pill[data-mode="ready"] .dot { background: #5FD3A5; box-shadow: 0 0 0 3px color-mix(in srgb, #5FD3A5 25%, transparent); }
+.net-pill[data-mode="wait"] .dot { background: #E9D25E; animation: netpulse 1s ease-in-out infinite; }
+.net-pill[data-mode="offline"] { border-color: color-mix(in srgb, #FF8F5A 55%, var(--line)); }
+.net-pill[data-mode="offline"] .dot { background: #FF8F5A; }
+.net-pill[data-mode="off"] .dot { background: var(--muted); }
+@keyframes netpulse { 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .net-pill .dot { animation: none !important; } }
+#app { padding-bottom: 72px; }
